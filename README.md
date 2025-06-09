@@ -91,8 +91,8 @@ Example:
 
 **Narendra Singh Rajput**  
 
-👉 Contact me: [WhatsApp Link](https://wa.me/91XXXXXXXXXX) → Replace with your number  
-👉 Email (optional): your-email@example.com  
+👉 Contact me: [WhatsApp Link](https://wa.me/919109864879) →
+👉 Email : narendrargpv1084@gmail.com  
 
 ---
 
