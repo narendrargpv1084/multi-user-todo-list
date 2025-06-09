@@ -51,6 +51,24 @@
     For more info click on the About section
 </footer>
 
+<!-- Firebase App -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyA9r_jND8JrPXmcfazfRtQwKUkhCu1kCR4",
+    authDomain: "my-to-do-lists.firebaseapp.com",
+    databaseURL: "https://my-to-do-lists-default-rtdb.firebaseio.com",
+    projectId: "my-to-do-lists",
+    storageBucket: "my-to-do-lists.appspot.com",
+    messagingSenderId: "41022303117",
+    appId: "1:41022303117:web:49c2b0bef8c590a4746bcd"
+  };
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<!-- Your app.js -->
 <script src="js/app.js"></script>
 </body>
 </html>
