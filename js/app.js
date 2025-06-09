@@ -1,31 +1,43 @@
-// js/app.js
+// app.js with Firebase Realtime Database
 
+// Get currentUser from LocalStorage (Login flow stays same)
 let currentUser = localStorage.getItem('currentUser');
 
 const loginLink = document.getElementById('login-link');
 const signupLink = document.getElementById('signup-link');
 const logoutLink = document.getElementById('logout-link');
 
+// Firebase DB reference
+const db = firebase.database();
+
 if (currentUser) {
     loginLink.style.display = 'none';
     signupLink.style.display = 'none';
     logoutLink.style.display = 'inline';
-    renderTasks();
+    loadTasksFromFirebase();
 } else {
-    renderTasks();
+    renderTasks([]);
 }
 
-function renderTasks() {
+function loadTasksFromFirebase() {
+    db.ref('tasks/' + currentUser).once('value', (snapshot) => {
+        const tasks = snapshot.val() || [];
+        renderTasks(tasks);
+    });
+}
+
+function saveTasksToFirebase(tasks) {
+    db.ref('tasks/' + currentUser).set(tasks);
+}
+
+function renderTasks(tasksFromDb = []) {
     const tbody = document.querySelector('#todo-table tbody');
     tbody.innerHTML = '';
 
-    if (!currentUser) return;
-
-    const tasks = JSON.parse(localStorage.getItem(`tasks_${currentUser}`)) || [];
+    const tasks = tasksFromDb;
 
     tasks.forEach((task, index) => {
         const tr = document.createElement('tr');
-
         tr.innerHTML = `
             <td>${index + 1}</td>
             <td id="task-text-${index}">${task.text}</td>
@@ -36,9 +48,11 @@ function renderTasks() {
             </td>
             <td><button onclick="removeTask(${index})">Remove</button></td>
         `;
-
         tbody.appendChild(tr);
     });
+
+    // Store in JS for editing
+    window.currentTasks = tasks;
 }
 
 function addTask() {
@@ -51,11 +65,11 @@ function addTask() {
     const taskText = input.value.trim();
 
     if (taskText !== '') {
-        const tasks = JSON.parse(localStorage.getItem(`tasks_${currentUser}`)) || [];
+        const tasks = window.currentTasks || [];
         tasks.push({ text: taskText, status: 'Pending' });
-        localStorage.setItem(`tasks_${currentUser}`, JSON.stringify(tasks));
+        saveTasksToFirebase(tasks);
         input.value = '';
-        renderTasks();
+        renderTasks(tasks);
         showMessage('Task added successfully!', false);
     } else {
         showMessage('Please enter a task!');
@@ -63,10 +77,10 @@ function addTask() {
 }
 
 function updateStatus(index) {
-    const tasks = JSON.parse(localStorage.getItem(`tasks_${currentUser}`)) || [];
+    const tasks = window.currentTasks || [];
     tasks[index].status = tasks[index].status === 'Pending' ? 'Completed' : 'Pending';
-    localStorage.setItem(`tasks_${currentUser}`, JSON.stringify(tasks));
-    renderTasks();
+    saveTasksToFirebase(tasks);
+    renderTasks(tasks);
     showMessage('Task status updated!', false);
 }
 
@@ -75,7 +89,6 @@ function startEdit(index) {
     const editCell = document.getElementById(`edit-cell-${index}`);
 
     const currentText = taskTextTd.textContent;
-
     taskTextTd.innerHTML = `<input type="text" id="edit-input-${index}" value="${currentText}" style="width: 80%;">`;
     editCell.innerHTML = `<button onclick="saveEdit(${index})">Save</button>`;
 }
@@ -84,19 +97,18 @@ function saveEdit(index) {
     const editInput = document.getElementById(`edit-input-${index}`);
     const newText = editInput.value.trim();
 
-    const tasks = JSON.parse(localStorage.getItem(`tasks_${currentUser}`)) || [];
+    const tasks = window.currentTasks || [];
     tasks[index].text = newText;
-    localStorage.setItem(`tasks_${currentUser}`, JSON.stringify(tasks));
-
-    renderTasks();
+    saveTasksToFirebase(tasks);
+    renderTasks(tasks);
     showMessage('Task updated successfully!', false);
 }
 
 function removeTask(index) {
-    const tasks = JSON.parse(localStorage.getItem(`tasks_${currentUser}`)) || [];
+    const tasks = window.currentTasks || [];
     tasks.splice(index, 1);
-    localStorage.setItem(`tasks_${currentUser}`, JSON.stringify(tasks));
-    renderTasks();
+    saveTasksToFirebase(tasks);
+    renderTasks(tasks);
     showMessage('Task removed successfully!', false);
 }
 
