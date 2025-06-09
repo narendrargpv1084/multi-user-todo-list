@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header>
+    <div class="logo">Todo</div>
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">Login</a>
+        <a href="signup.html">Sign Up</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>Create Your Account</h1>
+</section>
+
+<section class="todo-container">
+    <h2>Sign Up</h2>
+    <div id="message" style="display:none; padding: 0.5rem; margin-bottom: 1rem; border-radius: 4px;"></div>
+    <input type="text" id="signup-username" placeholder="Username" /><br/><br/>
+    <input type="password" id="signup-password" placeholder="Password" /><br/><br/>
+    <input type="password" id="signup-confirm-password" placeholder="Confirm Password" /><br/><br/>
+    <button onclick="signup()">Sign Up</button>
+</section>
+
+<footer>
+    &copy; Created by Narendra Singh Rajput<br>
+    For more info click on the About section
+</footer>
+
+<script src="js/signup.js"></script>
+</body>
+</html>

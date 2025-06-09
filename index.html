@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Organize Your Task</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header>
+    <div class="logo">Todo</div>
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html" id="login-link">Login</a>
+        <a href="signup.html" id="signup-link">Sign Up</a>
+        <a href="#" id="logout-link" style="display:none;" onclick="logout()">Logout</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>ORGANIZE YOUR Task Finally</h1>
+    <p>"Simplify your life with world's #1 To-do List site"</p>
+</section>
+
+<section class="todo-container">
+    <h2>To-Do List</h2>
+    <div id="message" style="display:none; padding: 0.5rem; margin-bottom: 1rem; border-radius: 4px;"></div>
+    <table id="todo-table">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Task</th>
+                <th>Status</th>
+                <th>Update</th>
+                <th>Edit</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <input type="text" id="new-task-input" placeholder="Type here to Add Task" />
+    <button onclick="addTask()">ADD</button>
+</section>
+
+<footer>
+    &copy; Created by Narendra Singh Rajput<br>
+    For more info click on the About section
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
